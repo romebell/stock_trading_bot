@@ -42,16 +42,6 @@ if 'Free Stock Screener' in driver.page_source:
 
 stock_list = stock_data.split('\n')
 
-# driver.get(f"https://wallmine.com/{x.get('exchange')}/{x.get('symbol')}")
-
-# for each_stock in final_list:
-#     x = parse_stock_data(each_stock)
-#     driver.get(f"https://wallmine.com/{x.get('exchange')}/{x.get('symbol')}")
-#     time.sleep(3)
-    
-#     if x.get('symbol') in driver.page_source:
-#         print(f"We are on {x.get('company_name')} stock page")
-
 def parse_stock_data(data):
     company_info_parsed = data.split(' $')[0]
     company_info = company_info_parsed.split(' ')
@@ -138,7 +128,13 @@ for i in range(len(stock_list[28:])):
         final_list.append(each_stock)
 
 for each_stock in final_list:
-    print(parse_stock_data(each_stock))
-    time.sleep(1)
+    x = parse_stock_data(each_stock)
+    driver.get(f"https://wallmine.com/{x.get('exchange')}/{x.get('symbol')}")
+    if x.get('symbol') in driver.page_source:
+        print(f"We are on {x.get('company_name')} stock page")
+        print('---')
+    print(x)
+    print('==================================')
+    time.sleep(2)
 
-
+driver.quit()
